@@ -1,11 +1,15 @@
-https://dillinger.io/
-This is a demo Laravel 5.8 application implementing JWT API autentication.
+This is a demo JWT API auth application implemented with
+- Laravel 5.8 + tymon/jwt-auth on the backend
+- Vue.js client
+
+Markdown written with https://dillinger.io
 
 # A. Instructions:
 
 - clone repository & serve ie under `laravel.test` local domain
 - `composer install`
 - `php artisan migrate --seed`
+- `php artisan jwt:secret`
 
 # B. Guide:
 
@@ -98,7 +102,7 @@ curl -X POST \
 
 ### 1. Configure jwt guard
 
-At `config\auth.php` we configure a new `api-jwt` guard that uses the jwt driver
+At [config\auth.php](https://github.com/igaster/laravel-vue-jwt/blob/master/config/auth.php) we configure a new `api-jwt` guard that uses the jwt driver
 
 ```php
     'guards' => [
@@ -113,7 +117,7 @@ At `config\auth.php` we configure a new `api-jwt` guard that uses the jwt driver
 
 ### 2. Auth Routes:
 
-- `routes\api,php`: All routes that are executing the `auth:api-jwt` middlware (guard) will verify that the request headers conatin a valid JWT token. 
+- [routes\api,php](https://github.com/igaster/laravel-vue-jwt/blob/master/routes/api.php): All routes that are executing the `auth:api-jwt` middlware (guard) will verify that the request headers conatin a valid JWT token. 
 - the `login` route should be excluded (obviously!)
 
 ```php
@@ -139,14 +143,15 @@ Route::group(['middleware' => 'auth:api-jwt'], function () {
 
 - If we don't want to setup the JWT as the default guard, then we need to explicit retrieve it throgh the Auth Facade. ie use `auth('api-jwt')` instead of `auth()`  
 
-View `app/Http/Controllers/AuthController.php` for reference
+Check [Api/AuthController.php](https://github.com/igaster/laravel-vue-jwt/blob/master/app/Http/Controllers/Api/AuthController.php) for reference
 
 # D. Client (vue.js)
 
 Client should handle 
-- user login to get a JWT tokem 
+- user login to get a JWT token
 - Store token on local storage or coockie 
 - Add token to all API requests 
 - Refresh the token bofore it expires
-- Handle expired tokens (ie ask user to login again)
+- Unauthenticated Responses + Expired tokens (HTTP Status 401)
 
+Vue.js is WIP!
