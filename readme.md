@@ -34,6 +34,7 @@ curl -X POST \
 ```
 curl -X POST \
   http://laravel.test/api/auth/login \
+  -H 'Accept: application/json' \
   -F email=admin@admin.com \
   -F password=admin
   ```
